@@ -69,36 +69,6 @@ echo " <VirtualHost *:80>
             AuthName \"Preview\"
             AuthUserFile /etc/apache2/.htpasswd
             Require valid-user
-
-            #START EDELMAN WHITELIST
-            Allow from 209.202.126.186
-            Allow from 12.38.190.5
-            Allow from 12.38.190.9
-            Allow from 50.57.4.20
-            #END EDELMAN WHITELIST
-
-            Allow from 52.10.147.156
-
-            #START SHORTPIXEL
-            Allow from 136.243.106.37
-            Allow from 136.243.106.38
-            Allow from 138.201.33.23
-            Allow from 136.243.176.16
-            #END SHORTPIXEL
-
-            #START USERSNAP
-            Allow from 176.9.158.226
-            Allow from 144.76.224.70
-            Allow from 78.46.60.85
-            Allow from 136.243.88.28
-            Allow from 46.137.112.149
-            Allow from 52.8.31.161
-            Allow from 54.254.241.8
-            Allow from 176.34.245.226
-            #END USERSNAP
-
-            Allow from .usersnap.com
-            Allow from .screener.io
             Allow from localhost
             Satisfy Any
         </Directory>
@@ -130,36 +100,6 @@ echo " <VirtualHost *:80>
             AuthName \"Preview\"
             AuthUserFile /etc/apache2/.htpasswd
             Require valid-user
-
-            #START EDELMAN WHITELIST
-            Allow from 209.202.126.186
-            Allow from 12.38.190.5
-            Allow from 12.38.190.9
-            Allow from 50.57.4.20
-            #END EDELMAN WHITELIST
-
-            Allow from 52.10.147.156
-
-            #START SHORTPIXEL
-            Allow from 136.243.106.37
-            Allow from 136.243.106.38
-            Allow from 138.201.33.23
-            Allow from 136.243.176.16
-            #END SHORTPIXEL
-
-            #START USERSNAP
-            Allow from 176.9.158.226
-            Allow from 144.76.224.70
-            Allow from 78.46.60.85
-            Allow from 136.243.88.28
-            Allow from 46.137.112.149
-            Allow from 52.8.31.161
-            Allow from 54.254.241.8
-            Allow from 176.34.245.226
-            #END USERSNAP
-
-            Allow from .usersnap.com
-            Allow from .screener.io
             Allow from localhost
             Satisfy Any
         </Directory>
@@ -172,11 +112,6 @@ echo " <VirtualHost *:80>
         ErrorLog /var/log/apache2/$dev-error.log
         CustomLog /var/log/apache2/$dev-access.log combined
         LogLevel warn
-
-        SSLEngine on
-        SSLCertificateFile   /etc/ssl/certs/ssl-cert-snakeoil.pem
-        SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
-        SSLCertificateChainFile /etc/ssl/certs/ssl-cert-snakeoil.pem
 
         <FilesMatch \"\.(cgi|shtml|phtml|php)$\">
         SSLOptions +StdEnvVars
@@ -311,10 +246,6 @@ SETTIGN UP BASIC UFW RULES
 sudo ufw enable
 ufw default deny incoming
 ufw default allow outgoing
-sudo ufw allow from 209.202.126.186
-sudo ufw allow from 50.57.4.20
-sudo ufw allow from 12.38.190.5
-sudo ufw allow from 12.38.190.9
 sudo ufw allow 80
 sudo ufw allow 443
 
@@ -329,19 +260,6 @@ case $mail in
   y|yes|Y|Yes|YES|YEs|YeS|yEs|yES|yeS|Oui|oui) break ;;
   *) break ;;
 esac
-
-# BAMBOO
-echo "Inserting Bamboo SSH KEY"
-echo "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAgEA5Nh5TVJjaZGHS3jdi2KCeAMfG8zDg/FFA+aO9lPieDrLjoi6CRSmNMQj3Oum14mmUNltbi9/+ZPWGROWK1TAl1gj50H/aJs1ATIsLAksjOIUg7tMbfZEysO85Y6zC8w5hgb7Rkh4doyP738pFLA4Dyd/V1mcvo13KZ+DpC1IMVAXvy5n8XZADDOAvO3nZgzUJ910I8TaEitBmgJyXEQr5Ynu24bWvaa66hBRWJ4P/MuNtio95iT5JLyh1TOdu0TjLfPm7dV0NV/MLwlC2izQDTcdvh30P5M27QTZkEjEE0k1atLhwD+oKKgjzTHvjaYIOPaYZ73HyrK7Am1WQVNIPFRyKa0r7cxz/mLCwMWPXRHTG00ZLZMTYj0wlxUZ87BmRyAtJGmxTfk2BYzELq8ccnHnhUg/wcNXJwGhclSXVWCMvx/Q964SwbWxQI5WZDcGmgwKVHn62goxQD1E+QUPwjLyCTXOoDZoGzJKdSeEBEOlAe21B9iD0l9QH5vQEHFtZSjyostGuyx/4S0aYLL/WmI7OAZJOJL/aXFEn5LYbW4oSdki+WiBv3jmSsbXiXZk35/YXCY+XX27bRAww1OXL80MzoVRb2o/rITeVYKUEC8mm5Wpz9cWW28kZnXtVg+SYTtiN1QFWPSQKWryPacNOoiLLjaaKBxdB4lDXvhCas0= root@669585-stash.dje.edelman.com
-" >> /root/.ssh/authorized_keys
-
-#NEW RELIC
-echo deb http://apt.newrelic.com/debian/ newrelic non-free >> /etc/apt/sources.list.d/newrelic.list
-wget -O- https://download.newrelic.com/548C16BF.gpg | apt-key add -
-apt-get update
-apt-get install newrelic-sysmond
-nrsysmond-config --set license_key=d4e14a28f904b3b3ebefdad8a9d9f571070bf410
-/etc/init.d/newrelic-sysmond start
 
 
 echo "
